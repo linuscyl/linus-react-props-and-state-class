@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import './App.css';
 
+
 import ClassPropComp from './ClassPropComp';
 
 class App extends Component {
@@ -10,7 +11,8 @@ class App extends Component {
     super()
     this.state = {
       isEmpty: true,
-      count: 0
+      count: 0,
+      day: 0
     }
   }
 
@@ -26,13 +28,33 @@ class App extends Component {
     })
   }
 
+  incrementDay() {
+    this.setState({
+      day: this.state.day + 1
+    })
+  }
+
+  //prev state can also support first time. Therefore, recommended to use
+  incrementDayP() {
+    this.setState(prevState => ({
+      day: prevState.day + 1
+    }))
+  }
+
+  incrementDayFive() {
+    this.incrementDayP()
+    this.incrementDayP()
+    this.incrementDayP()
+    this.incrementDayP()
+    this.incrementDayP()
+  }
+
   //Normal Function
   resetCount() {
     this.setState({
       count: 0
     })
   }
-
 
   render() {
     return (
@@ -46,6 +68,13 @@ class App extends Component {
         <hr />
         <h2>isEmpty? : {this.state.isEmpty.toString()}</h2>
         <button onClick={() => this.changeIsEmpty()}>Change is Empty</button>
+        <hr />
+        <h2>Day: {this.state.day}</h2>
+        <div className="App-header">
+          <button onClick={() => this.incrementDay()}>Press to increment + 1 (normal setState)</button>
+          <button onClick={() => this.incrementDayP()}>Press to increment + 1 (by prevState)</button>
+          <button onClick={() => this.incrementDayFive()}>Press to increment + 5</button>
+        </div>
       </div>
     )
   }
